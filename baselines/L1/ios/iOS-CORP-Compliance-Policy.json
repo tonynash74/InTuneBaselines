@@ -1,0 +1,33 @@
+{
+  "@odata.type": "#microsoft.graph.iosCompliancePolicy",
+  "displayName": "iOS-CORP-L1-Compliance-Baseline-2025-04",
+  "description": "Cyber Essentials L1 baseline \u2013 iOS supervised corporate devices.",
+  "roleScopeTagIds": [
+    "0"
+  ],
+  "scheduledActionsForRule": [
+    {
+      "ruleName": "SimpleDeviceCompliance",
+      "scheduledActionConfigurations": [
+        {
+          "actionType": "block",
+          "gracePeriodHours": 0,
+          "notificationTemplateId": "00000000-0000-0000-0000-000000000000",
+          "notificationMessageCCList": []
+        }
+      ]
+    }
+  ],
+  "securityBlockJailbrokenDevices": true,
+  "osMinimumVersion": "16.0",
+  "osMaximumVersion": null,
+  "passcodeRequired": true,
+  "passcodeBlockSimple": true,
+  "passcodeRequiredType": "alphanumeric",
+  "passcodeMinimumLength": 8,
+  "passcodeMinimumCharacterSetCount": 1,
+  "passcodeMinutesOfInactivityBeforeLock": 5,
+  "passcodeExpirationDays": 365,
+  "passcodePreviousPasscodeBlockCount": 5,
+  "managedEmailProfileRequired": false
+}

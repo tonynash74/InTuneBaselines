@@ -1,0 +1,37 @@
+{
+  "@odata.type": "#microsoft.graph.windows10CompliancePolicy",
+  "displayName": "Win11-CORP-L1-Compliance-Baseline-2025-04",
+  "description": "Cyber Essentials L1 baseline \u2013 Windows 11 corporate devices.",
+  "roleScopeTagIds": [
+    "0"
+  ],
+  "scheduledActionsForRule": [
+    {
+      "ruleName": "SimpleDeviceCompliance",
+      "scheduledActionConfigurations": [
+        {
+          "actionType": "block",
+          "gracePeriodHours": 0,
+          "notificationTemplateId": "00000000-0000-0000-0000-000000000000",
+          "notificationMessageCCList": []
+        }
+      ]
+    }
+  ],
+  "osMinimumVersion": "10.0.22000.0",
+  "osMaximumVersion": null,
+  "defenderEnabled": true,
+  "defenderVersion": null,
+  "deviceThreatProtectionEnabled": false,
+  "deviceThreatProtectionRequiredSecurityLevel": "unavailable",
+  "secureBootEnabled": true,
+  "codeIntegrityEnabled": true,
+  "bitLockerEnabled": true,
+  "passwordRequired": true,
+  "passwordBlockSimple": true,
+  "passwordRequiredToUnlockFromIdle": true,
+  "passwordMinimumLength": 8,
+  "passwordRequiredType": "alphanumeric",
+  "passwordExpirationDays": 365,
+  "passwordMinutesOfInactivityBeforeLock": 15
+}

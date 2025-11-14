@@ -1,0 +1,34 @@
+name: Import Intune baselines
+
+on:
+  workflow_dispatch:
+    inputs:
+      level:
+        description: "Baseline level to import (L1 or L2)"
+        required: true
+        default: "L1"
+
+jobs:
+  import:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Microsoft Graph PowerShell
+        shell: pwsh
+        run: |
+          Install-Module Microsoft.Graph -Scope CurrentUser -Force
+
+      - name: Connect and import baselines
+        shell: pwsh
+        env:
+          AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+          AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+          AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+        run: |
+          Connect-MgGraph -ClientId $env:AZURE_CLIENT_ID `
+                          -TenantId $env:AZURE_TENANT_ID `
+                          -ClientSecret $env:AZURE_CLIENT_SECRET `
+                          -Scopes "DeviceManagementConfiguration.ReadWrite.All"
+          Select-MgProfile -Name "v1.0"
+          .\scripts\Import-IntuneBaselines.ps1 -Level "${{ github.event.inputs.level }}" -VersionTag "2025-04"

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadDisplayName</key>
+  <string>iOS-CORP-L1-Configuration-Baseline-2025-04</string>
+  <key>PayloadIdentifier</key>
+  <string>com.example.cyberessentials.ios-corp-l1</string>
+  <key>PayloadRemovalDisallowed</key>
+  <false/>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadUUID</key>
+  <string>2C458F04-66DB-4D17-89F2-BF5C58AAC713</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+  <key>PayloadContent</key>
+  <array>
+    <dict>
+      <key>PayloadType</key>
+      <string>com.apple.applicationaccess</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadIdentifier</key>
+      <string>com.example.cyberessentials.ios-corp-l1.restrictions</string>
+      <key>PayloadUUID</key>
+      <string>AA416B77-A745-4F0F-B3F3-52E3988A564A</string>
+      <key>PayloadDisplayName</key>
+      <string>Restrictions</string>
+      <!-- TODO: Populate concrete restrictions/passcode keys based on docs/ios-baselines.md -->
+    </dict>
+  </array>
+</dict>
+</plist>

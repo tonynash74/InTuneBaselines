@@ -1,0 +1,8 @@
+{
+  "@odata.type": "#microsoft.graph.deviceManagementConfigurationPolicy",
+  "displayName": "Win11-CORP-L2-Configuration-Baseline-2025-04",
+  "description": "Cyber Essentials L2 baseline \u2013 Windows 11 corporate devices (Settings Catalog skeleton, hardened). Replace/enrich settings via Intune export.",
+  "platforms": "windows10",
+  "technologies": "mdm",
+  "settings": []
+}

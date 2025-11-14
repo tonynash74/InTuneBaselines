@@ -1,0 +1,19 @@
+{
+  "@odata.type": "#microsoft.graph.androidWorkProfileGeneralDeviceConfiguration",
+  "displayName": "Android-BYOD-L1-Configuration-Baseline-2025-04",
+  "description": "Cyber Essentials L1 baseline \u2013 Android personally-owned work profile.",
+  "workProfileRequirePassword": true,
+  "workProfilePasswordRequiredType": "atLeastAlphanumeric",
+  "workProfilePasswordMinimumLength": 6,
+  "workProfilePasswordMinutesOfInactivityBeforeScreenTimeout": 5,
+  "workProfilePasswordPreviousPasswordBlockCount": 5,
+  "workProfileDataSharingType": "allowPersonalToWork",
+  "workProfileBlockCrossProfileCopyPaste": true,
+  "workProfileBlockCrossProfileContactsSearch": true,
+  "workProfileBlockCrossProfileCallerId": false,
+  "workProfileBlockAddingAccounts": true,
+  "workProfileBlockNotificationsWhileDeviceLocked": false,
+  "workProfileDefaultAppPermissionPolicy": "prompt",
+  "workProfileBluetoothEnableContactSharing": false,
+  "securityRequireVerifyApps": true
+}

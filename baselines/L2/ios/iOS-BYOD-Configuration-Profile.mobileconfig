@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadDisplayName</key>
+  <string>iOS-BYOD-L2-Configuration-Baseline-2025-04</string>
+  <key>PayloadIdentifier</key>
+  <string>com.example.cyberessentials.ios-byod-l2</string>
+  <key>PayloadRemovalDisallowed</key>
+  <false/>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadUUID</key>
+  <string>62DA31C3-3F21-4823-AF99-F3CC72B4756F</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+  <key>PayloadContent</key>
+  <array>
+    <dict>
+      <key>PayloadType</key>
+      <string>com.apple.applicationaccess</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadIdentifier</key>
+      <string>com.example.cyberessentials.ios-byod-l2.restrictions</string>
+      <key>PayloadUUID</key>
+      <string>D2624720-7B8F-43F3-8634-37A9334C0E00</string>
+      <key>PayloadDisplayName</key>
+      <string>Restrictions</string>
+      <!-- TODO: Populate concrete restrictions/passcode keys based on docs/ios-baselines.md -->
+    </dict>
+  </array>
+</dict>
+</plist>
