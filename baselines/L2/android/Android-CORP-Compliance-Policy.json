@@ -1,41 +1,44 @@
 {
   "@odata.type": "#microsoft.graph.androidDeviceOwnerCompliancePolicy",
-  "displayName": "Android-CORP-L2-Compliance-Baseline-2025-04",
-  "description": "Cyber Essentials L1 baseline \u2013 Android corp-owned fully managed / corp-owned work profile.",
-  "roleScopeTagIds": [
-    "0"
-  ],
-  "scheduledActionsForRule": [
-    {
-      "ruleName": "SimpleDeviceCompliance",
-      "scheduledActionConfigurations": [
-        {
-          "actionType": "block",
-          "gracePeriodHours": 0,
-          "notificationTemplateId": "00000000-0000-0000-0000-000000000000",
-          "notificationMessageCCList": []
-        }
-      ]
-    }
-  ],
+  "displayName": "CE-L2 Android CORP – Compliance",
+  "description": "Cyber Essentials L2 hardened baseline for corporate-owned Android Enterprise devices (fully managed / COBO / COPE). Builds on L1 by enforcing a stronger device password, shorter idle timeout, device and advanced threat protection, and strict OS/security patch baselines.",
+  "version": 1,
   "deviceThreatProtectionEnabled": true,
-  "deviceThreatProtectionRequiredSecurityLevel": "secured",
+  "deviceThreatProtectionRequiredSecurityLevel": "low",
   "advancedThreatProtectionRequiredSecurityLevel": "secured",
   "securityBlockJailbrokenDevices": true,
   "securityRequireSafetyNetAttestationBasicIntegrity": true,
   "securityRequireSafetyNetAttestationCertifiedDevice": true,
-  "securityRequiredAndroidSafetyNetEvaluationType": "hardwareBacked",
-  "securityRequireIntuneAppIntegrity": true,
-  "osMinimumVersion": "14",
-  "minAndroidSecurityPatchLevel": "2025-04-01",
-  "requireNoPendingSystemUpdates": true,
+  "osMinimumVersion": "10.0",
+  "osMaximumVersion": null,
+  "minAndroidSecurityPatchLevel": "2024-04-01",
   "passwordRequired": true,
-  "passwordMinimumLength": 8,
+  "passwordMinimumLength": 10,
   "passwordMinimumLetterCharacters": 1,
+  "passwordMinimumLowerCaseCharacters": 1,
+  "passwordMinimumNonLetterCharacters": 1,
   "passwordMinimumNumericCharacters": 1,
+  "passwordMinimumSymbolCharacters": 1,
+  "passwordMinimumUpperCaseCharacters": 1,
   "passwordRequiredType": "alphanumeric",
   "passwordMinutesOfInactivityBeforeLock": 3,
-  "passwordExpirationDays": 180,
+  "passwordExpirationDays": 365,
   "passwordPreviousPasswordCountToBlock": 5,
-  "storageRequireEncryption": true
+  "storageRequireEncryption": true,
+  "securityRequireIntuneAppIntegrity": true,
+  "requireNoPendingSystemUpdates": true,
+  "securityRequiredAndroidSafetyNetEvaluationType": "hardwareBacked",
+  "scheduledActionsForRule": [
+    {
+      "ruleName": "PasswordRequired",
+      "scheduledActionConfigurations": [
+        {
+          "actionType": "block",
+          "gracePeriodHours": 0,
+          "notificationTemplateId": "",
+          "notificationMessageCCList": []
+        }
+      ]
+    }
+  ]
 }
