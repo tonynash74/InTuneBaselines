@@ -1,0 +1,13 @@
+{
+  "@odata.type": "#microsoft.graph.iosGeneralDeviceConfiguration",
+  "displayName": "CE-L1 iOS BYOD – Config (Device restrictions)",
+  "description": "Cyber Essentials L1 baseline for iOS/iPadOS BYOD – light DLP and TLS hygiene without over-managing personal devices.",
+  "certificatesBlockUntrustedTlsCertificates": true,
+  "documentsBlockManagedDocumentsInUnmanagedApps": true,
+  "documentsBlockUnmanagedDocumentsInManagedApps": false,
+  "iCloudBlockManagedAppsSync": true,
+  "iCloudBlockDocumentSync": false,
+  "iCloudBlockBackup": false,
+  "iCloudRequireEncryptedBackup": false,
+  "configurationProfileBlockChanges": false
+}

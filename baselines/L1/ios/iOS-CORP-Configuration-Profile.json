@@ -1,0 +1,19 @@
+{
+  "@odata.type": "#microsoft.graph.iosGeneralDeviceConfiguration",
+  "displayName": "CE-L1 iOS CORP – Config (Device restrictions)",
+  "description": "Cyber Essentials L1 baseline for iOS/iPadOS corporate devices – basic DLP and iCloud restrictions suitable for general business use.",
+  "certificatesBlockUntrustedTlsCertificates": true,
+  "documentsBlockManagedDocumentsInUnmanagedApps": true,
+  "documentsBlockUnmanagedDocumentsInManagedApps": false,
+  "iCloudBlockManagedAppsSync": true,
+  "iCloudBlockDocumentSync": true,
+  "iCloudBlockBackup": true,
+  "iCloudRequireEncryptedBackup": true,
+  "iCloudBlockPhotoLibrary": false,
+  "iCloudBlockPhotoStreamSync": false,
+  "iCloudBlockSharedPhotoStream": false,
+  "configurationProfileBlockChanges": true,
+  "hostPairingBlocked": false,
+  "airDropBlocked": false,
+  "safariCookieSettings": "browserDefault"
+}

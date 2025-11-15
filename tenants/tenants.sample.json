@@ -1,0 +1,19 @@
+```json
+[
+  {
+    "TenantId": "00000000-0000-0000-0000-000000000000",
+    "DisplayName": "Contoso Ltd",
+    "BaselineLevel": "L1",
+    "VersionTag": "2025-04",
+    "ClientId": "11111111-1111-1111-1111-111111111111",
+    "CertificateThumbprint": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+  },
+  {
+    "TenantId": "22222222-2222-2222-2222-222222222222",
+    "DisplayName": "Fabrikam Plc",
+    "BaselineLevel": "Both",
+    "VersionTag": "2025-04",
+    "ClientId": "33333333-3333-3333-3333-333333333333",
+    "CertificateThumbprint": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+  }
+]

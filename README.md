@@ -1,16 +1,20 @@
 # Cyber Essentials Aligned Intune Baselines
 
-This repository contains scaffolded **L1** and **L2** baselines for:
+This repo contains **Intune baselines** aligned with **Cyber Essentials v3.2 (“Willow”, April 2025)**:
+
+- **L1** – minimum Cyber Essentials controls.
+- **L2** – hardened overlay for high-risk devices / CE+ style posture.
+
+Platforms:
 
 - Android (BYOD + Corporate)
-- iOS (BYOD + Corporate)
+- iOS/iPadOS (BYOD + Corporate)
 - Windows 11 (Corporate)
+- macOS (Corporate; BYOD handled separately)
 
-The structure separates **L1** (minimum Cyber Essentials-aligned baseline) and **L2** (hardened) by folder.
-JSON files are intended to be used with **Microsoft Graph** via the PowerShell scripts in `scripts/`.
+Baselines are expressed as **Microsoft Graph JSON** and deployed using PowerShell scripts in `scripts/`.
 
-> Note: Android L1 baselines in this scaffold contain example Graph JSON payloads. Other baselines may be minimal
-> skeletons for now and should be validated and extended before production use.
+---
 
 ## Structure
 
@@ -24,19 +28,11 @@ baselines/
     android/
     ios/
     windows/
+configuration/
+  macos/
+    L1/
+    L2/
 scripts/
-.github/workflows/
+.github/
 docs/
-```
-
-## Importing baselines
-
-1. Connect to Graph with `DeviceManagementConfiguration.ReadWrite.All`.
-2. Run:
-
-```powershell
-.\scripts\Import-IntuneBaselines.ps1 -Level L1 -VersionTag "2025-04"
-.\scripts\Import-IntuneBaselines.ps1 -Level L2 -VersionTag "2025-04"
-```
-
-3. Assign policies in Intune using the dynamic groups and filters described in `docs/assignment-design.md`.
+tenants/
