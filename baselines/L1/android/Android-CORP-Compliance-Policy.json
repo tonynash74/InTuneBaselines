@@ -1,41 +1,35 @@
 {
   "@odata.type": "#microsoft.graph.androidDeviceOwnerCompliancePolicy",
-  "displayName": "Android-CORP-L1-Compliance-Baseline-2025-04",
-  "description": "Cyber Essentials L1 baseline \u2013 Android corp-owned fully managed / corp-owned work profile.",
-  "roleScopeTagIds": [
-    "0"
-  ],
-  "scheduledActionsForRule": [
-    {
-      "ruleName": "SimpleDeviceCompliance",
-      "scheduledActionConfigurations": [
-        {
-          "actionType": "block",
-          "gracePeriodHours": 0,
-          "notificationTemplateId": "00000000-0000-0000-0000-000000000000",
-          "notificationMessageCCList": []
-        }
-      ]
-    }
-  ],
+  "displayName": "CE-L1 Android CORP – Compliance",
+  "description": "Cyber Essentials L1 baseline for Android Enterprise fully managed / corporate-owned devices. Enforces strong device PIN, encryption, Play Integrity checks and no pending OS/security updates aligned to CE v3.2 secure configuration, malware protection and secure update management controls.",
+  "version": 1,
   "deviceThreatProtectionEnabled": false,
   "deviceThreatProtectionRequiredSecurityLevel": "unavailable",
   "advancedThreatProtectionRequiredSecurityLevel": "unavailable",
   "securityBlockJailbrokenDevices": true,
   "securityRequireSafetyNetAttestationBasicIntegrity": true,
   "securityRequireSafetyNetAttestationCertifiedDevice": true,
-  "securityRequiredAndroidSafetyNetEvaluationType": "basic",
-  "securityRequireIntuneAppIntegrity": true,
-  "osMinimumVersion": "14",
-  "minAndroidSecurityPatchLevel": "2025-01-01",
-  "requireNoPendingSystemUpdates": true,
   "passwordRequired": true,
-  "passwordMinimumLength": 6,
-  "passwordMinimumLetterCharacters": 1,
-  "passwordMinimumNumericCharacters": 1,
+  "passwordMinimumLength": 8,
   "passwordRequiredType": "alphanumeric",
   "passwordMinutesOfInactivityBeforeLock": 5,
   "passwordExpirationDays": 365,
   "passwordPreviousPasswordCountToBlock": 5,
-  "storageRequireEncryption": true
+  "storageRequireEncryption": true,
+  "securityRequireIntuneAppIntegrity": true,
+  "requireNoPendingSystemUpdates": true,
+  "securityRequiredAndroidSafetyNetEvaluationType": "basic",
+  "scheduledActionsForRule": [
+    {
+      "ruleName": "PasswordRequired",
+      "scheduledActionConfigurations": [
+        {
+          "actionType": "block",
+          "gracePeriodHours": 0,
+          "notificationTemplateId": "",
+          "notificationMessageCCList": []
+        }
+      ]
+    }
+  ]
 }

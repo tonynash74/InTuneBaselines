@@ -1,33 +1,31 @@
 {
   "@odata.type": "#microsoft.graph.iosCompliancePolicy",
-  "displayName": "iOS-CORP-L1-Compliance-Baseline-2025-04",
-  "description": "Cyber Essentials L1 baseline \u2013 iOS supervised corporate devices.",
-  "roleScopeTagIds": [
-    "0"
-  ],
+  "displayName": "CE-L1 iOS CORP – Compliance",
+  "description": "Cyber Essentials L1 baseline for supervised / corporate-owned iOS / iPadOS devices. Enforces strong alphanumeric passcodes, short inactivity lock, jailbreak detection and managed email alignment with CE v3.2 secure configuration, user access control and malware protection controls.",
+  "version": 1,
+  "passcodeRequired": true,
+  "passcodeBlockSimple": true,
+  "passcodeMinimumLength": 8,
+  "passcodeRequiredType": "alphanumeric",
+  "passcodeMinutesOfInactivityBeforeLock": 5,
+  "passcodePreviousPasscodeBlockCount": 5,
+  "passcodeMinimumCharacterSetCount": 2,
+  "osMinimumVersion": "16.0",
+  "securityBlockJailbrokenDevices": true,
+  "deviceThreatProtectionEnabled": false,
+  "deviceThreatProtectionRequiredSecurityLevel": "unavailable",
+  "managedEmailProfileRequired": true,
   "scheduledActionsForRule": [
     {
-      "ruleName": "SimpleDeviceCompliance",
+      "ruleName": "PasswordRequired",
       "scheduledActionConfigurations": [
         {
           "actionType": "block",
           "gracePeriodHours": 0,
-          "notificationTemplateId": "00000000-0000-0000-0000-000000000000",
+          "notificationTemplateId": "",
           "notificationMessageCCList": []
         }
       ]
     }
-  ],
-  "securityBlockJailbrokenDevices": true,
-  "osMinimumVersion": "16.0",
-  "osMaximumVersion": null,
-  "passcodeRequired": true,
-  "passcodeBlockSimple": true,
-  "passcodeRequiredType": "alphanumeric",
-  "passcodeMinimumLength": 8,
-  "passcodeMinimumCharacterSetCount": 1,
-  "passcodeMinutesOfInactivityBeforeLock": 5,
-  "passcodeExpirationDays": 365,
-  "passcodePreviousPasscodeBlockCount": 5,
-  "managedEmailProfileRequired": false
+  ]
 }

@@ -1,41 +1,37 @@
 {
   "@odata.type": "#microsoft.graph.androidWorkProfileCompliancePolicy",
-  "displayName": "Android-BYOD-L1-Compliance-Baseline-2025-04",
-  "description": "Cyber Essentials L1 baseline \u2013 Android personally-owned work profile.",
-  "roleScopeTagIds": [
-    "0"
-  ],
-  "scheduledActionsForRule": [
-    {
-      "ruleName": "SimpleDeviceCompliance",
-      "scheduledActionConfigurations": [
-        {
-          "actionType": "block",
-          "gracePeriodHours": 0,
-          "notificationTemplateId": "00000000-0000-0000-0000-000000000000",
-          "notificationMessageCCList": []
-        }
-      ]
-    }
-  ],
+  "displayName": "CE-L1 Android BYOD – Compliance",
+  "description": "Cyber Essentials L1 baseline for Android Enterprise work profile (BYOD). Enforces device lock, minimum PIN length, encryption and Google Play Protect / Play Integrity checks aligned to CE v3.2 secure configuration and malware protection controls.",
+  "version": 1,
   "passwordRequired": true,
   "passwordMinimumLength": 6,
-  "passwordRequiredType": "alphanumeric",
+  "passwordRequiredType": "numeric",
   "passwordMinutesOfInactivityBeforeLock": 5,
   "passwordExpirationDays": 365,
   "passwordPreviousPasswordBlockCount": 5,
   "securityPreventInstallAppsFromUnknownSources": true,
-  "securityDisableUsbDebugging": true,
+  "securityDisableUsbDebugging": false,
   "securityRequireVerifyApps": true,
+  "deviceThreatProtectionEnabled": false,
+  "deviceThreatProtectionRequiredSecurityLevel": "unavailable",
   "securityBlockJailbrokenDevices": true,
+  "storageRequireEncryption": true,
   "securityRequireSafetyNetAttestationBasicIntegrity": true,
-  "securityRequireSafetyNetAttestationCertifiedDevice": false,
+  "securityRequireSafetyNetAttestationCertifiedDevice": true,
   "securityRequireGooglePlayServices": true,
   "securityRequireUpToDateSecurityProviders": true,
   "securityRequireCompanyPortalAppIntegrity": true,
-  "deviceThreatProtectionEnabled": false,
-  "deviceThreatProtectionRequiredSecurityLevel": "unavailable",
-  "osMinimumVersion": "14",
-  "minAndroidSecurityPatchLevel": "2025-01-01",
-  "storageRequireEncryption": true
+  "scheduledActionsForRule": [
+    {
+      "ruleName": "PasswordRequired",
+      "scheduledActionConfigurations": [
+        {
+          "actionType": "block",
+          "gracePeriodHours": 0,
+          "notificationTemplateId": "",
+          "notificationMessageCCList": []
+        }
+      ]
+    }
+  ]
 }
