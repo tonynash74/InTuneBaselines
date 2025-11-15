@@ -1,0 +1,36 @@
+{
+  "@odata.type": "#microsoft.graph.macOSCompliancePolicy",
+  "displayName": "CE-L2 macOS CORP – Compliance (2025-04)",
+  "description": "Cyber Essentials L2 (hardened) baseline for corporate macOS devices. Builds on L1 with stricter OS, password, firewall and threat protection requirements.",
+  "passwordRequired": true,
+  "passwordBlockSimple": true,
+  "passwordExpirationDays": 365,
+  "passwordMinimumLength": 14,
+  "passwordMinutesOfInactivityBeforeLock": 5,
+  "passwordPreviousPasswordBlockCount": 10,
+  "passwordMinimumCharacterSetCount": 3,
+  "passwordRequiredType": "alphanumeric",
+  "osMinimumVersion": "14.0",
+  "systemIntegrityProtectionEnabled": true,
+  "deviceThreatProtectionEnabled": true,
+  "deviceThreatProtectionRequiredSecurityLevel": "low",
+  "storageRequireEncryption": true,
+  "firewallEnabled": true,
+  "firewallBlockAllIncoming": true,
+  "firewallEnableStealthMode": true,
+  "scheduledActionsForRule": [
+    {
+      "@odata.type": "#microsoft.graph.deviceComplianceScheduledActionForRule",
+      "ruleName": "PasswordRequired",
+      "scheduledActionConfigurations": [
+        {
+          "@odata.type": "#microsoft.graph.deviceComplianceActionItem",
+          "actionType": "block",
+          "gracePeriodHours": 0,
+          "notificationTemplateId": "",
+          "notificationMessageCCList": []
+        }
+      ]
+    }
+  ]
+}

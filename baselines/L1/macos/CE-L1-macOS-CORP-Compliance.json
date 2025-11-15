@@ -1,0 +1,36 @@
+{
+  "@odata.type": "#microsoft.graph.macOSCompliancePolicy",
+  "displayName": "CE-L1 macOS CORP – Compliance (2025-04)",
+  "description": "Cyber Essentials L1 (v3.2 – Willow, April 2025) baseline for corporate macOS devices. Enforces supported OS, disk encryption, firewall and minimum password controls.",
+  "passwordRequired": true,
+  "passwordBlockSimple": true,
+  "passwordExpirationDays": 365,
+  "passwordMinimumLength": 12,
+  "passwordMinutesOfInactivityBeforeLock": 10,
+  "passwordPreviousPasswordBlockCount": 5,
+  "passwordMinimumCharacterSetCount": 2,
+  "passwordRequiredType": "alphanumeric",
+  "osMinimumVersion": "13.0",
+  "systemIntegrityProtectionEnabled": true,
+  "deviceThreatProtectionEnabled": false,
+  "deviceThreatProtectionRequiredSecurityLevel": "notSet",
+  "storageRequireEncryption": true,
+  "firewallEnabled": true,
+  "firewallBlockAllIncoming": false,
+  "firewallEnableStealthMode": true,
+  "scheduledActionsForRule": [
+    {
+      "@odata.type": "#microsoft.graph.deviceComplianceScheduledActionForRule",
+      "ruleName": "PasswordRequired",
+      "scheduledActionConfigurations": [
+        {
+          "@odata.type": "#microsoft.graph.deviceComplianceActionItem",
+          "actionType": "block",
+          "gracePeriodHours": 0,
+          "notificationTemplateId": "",
+          "notificationMessageCCList": []
+        }
+      ]
+    }
+  ]
+}
