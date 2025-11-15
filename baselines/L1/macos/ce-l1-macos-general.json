@@ -1,0 +1,11 @@
+{
+  "@odata.type": "#microsoft.graph.macOSGeneralDeviceConfiguration",
+  "displayName": "CE-L1 - macOS General (Corporate)",
+  "description": "Cyber Essentials L1 baseline for macOS general settings (password, lock, inactivity timeout) for corporate-owned devices.",
+  "passwordRequired": true,
+  "passwordBlockSimple": true,
+  "passwordRequiredType": "alphanumeric",
+  "passwordMinimumLength": 8,
+  "passwordMinutesOfInactivityBeforeScreenTimeout": 5,
+  "passwordMinutesOfInactivityBeforeLock": 15
+}

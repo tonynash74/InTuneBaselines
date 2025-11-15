@@ -1,0 +1,15 @@
+{
+  "@odata.type": "#microsoft.graph.macOSEndpointProtectionConfiguration",
+  "displayName": "CE-L2 - macOS Endpoint Protection (Corporate, Hardened)",
+  "description": "Cyber Essentials L2 baseline for macOS endpoint protection (FileVault, firewall, Gatekeeper) for higher-risk corporate devices.",
+  "firewallEnabled": true,
+  "firewallBlockAllIncoming": true,
+  "firewallEnableStealthMode": true,
+  "gatekeeperAllowedAppSource": "macAppStore",
+  "gatekeeperBlockOverride": true,
+  "fileVaultEnabled": true,
+  "fileVaultAllowDeferralUntilSignOut": false,
+  "fileVaultNumberOfTimesUserCanIgnore": 0,
+  "fileVaultRecoveryKeyType": "personalRecoveryKey",
+  "fileVaultPersonalRecoveryKeyHelpMessage": "If you lose your FileVault recovery key, sign in to the Company Portal website, open Devices, select your Mac, and choose Get recovery key, or contact the IT service desk immediately."
+}
