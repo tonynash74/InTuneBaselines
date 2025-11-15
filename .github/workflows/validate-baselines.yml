@@ -1,20 +1,14 @@
-## T12 – CI pipeline & basic tests
-
-### `.github/workflows/validate-baselines.yml`
-
-#GitHub Actions workflow to:
-
-#- Run **Pester** tests on JSON baselines.
-#- Run **PSScriptAnalyzer** on `scripts/*.ps1`.
-
-```yaml
 name: Validate baselines
 
 on:
   push:
-    branches: [ master, main ]
+    branches:
+      - main
+      - master
   pull_request:
-    branches: [ master, main ]
+    branches:
+      - main
+      - master
 
 jobs:
   validate:
@@ -24,31 +18,25 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup PowerShell
-        uses: PowerShell/PowerShell-action@v2
-        with:
-          pwsh-version: 'latest'
-
-      - name: Install test modules
+      - name: Install PowerShell modules
+        shell: pwsh
         run: |
-          pwsh -Command '
-            Install-Module Pester -Scope CurrentUser -Force -MinimumVersion 5.0.0;
-            Install-Module PSScriptAnalyzer -Scope CurrentUser -Force
-          '
+          Install-Module Pester -Scope CurrentUser -Force -MinimumVersion 5.0.0
+          Install-Module PSScriptAnalyzer -Scope CurrentUser -Force
 
       - name: Run PSScriptAnalyzer on scripts
+        if: ${{ hashFiles('scripts/**/*.ps1') != '' }}
+        shell: pwsh
         run: |
-          pwsh -Command '
-            Import-Module PSScriptAnalyzer;
-            if (Test-Path "./scripts") {
-              Invoke-ScriptAnalyzer -Path "./scripts" -Recurse -Severity Warning,Error -ExcludeRule PSAvoidUsingWriteHost;
-            } else {
-              Write-Host "No scripts directory found, skipping ScriptAnalyzer.";
-            }
-          '
+          Import-Module PSScriptAnalyzer
+          if (Test-Path "./scripts") {
+            Invoke-ScriptAnalyzer -Path "./scripts" -Recurse -Severity Warning,Error -ExcludeRule PSAvoidUsingWriteHost
+          } else {
+            Write-Host "No scripts directory found, skipping ScriptAnalyzer."
+          }
 
       - name: Run Pester tests
+        if: ${{ hashFiles('tests/**/*.ps1') != '' }}
+        shell: pwsh
         run: |
-          pwsh -Command '
-            Invoke-Pester -Path "./tests" -Output Detailed
-          '
+          Invoke-Pester -Path "./tests" -Output Detailed
