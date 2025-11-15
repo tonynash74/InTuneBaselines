@@ -1,8 +1,62 @@
 {
-  "@odata.type": "#microsoft.graph.deviceManagementConfigurationPolicy",
+  "@odata.type": "#microsoft.graph.windows10EndpointProtectionConfiguration",
   "displayName": "Win11-CORP-L2-Configuration-Baseline-2025-04",
-  "description": "Cyber Essentials L2 baseline \u2013 Windows 11 corporate devices (Settings Catalog skeleton, hardened). Replace/enrich settings via Intune export.",
-  "platforms": "windows10",
-  "technologies": "mdm",
-  "settings": []
+  "description": "Cyber Essentials L2 hardened baseline for Windows 11 corporate devices. Builds on CE-L1 by tightening Defender, firewall and local security options in line with NCSC good practice and CE+ style expectations.",
+  "version": 1,
+
+  "defenderAllowRealTimeMonitoring": true,
+  "defenderAllowOnAccessProtection": true,
+  "defenderAllowBehaviorMonitoring": true,
+  "defenderAllowScanDownloads": true,
+  "defenderAllowScanNetworkFiles": true,
+  "defenderAllowScanRemovableDrivesDuringFullScan": true,
+  "defenderEnableScanIncomingMail": true,
+  "defenderEnableScanMappedNetworkDrivesDuringFullScan": true,
+  "defenderCheckForSignaturesBeforeRunningScan": true,
+  "defenderSignatureUpdateIntervalInHours": 2,
+  "defenderPotentiallyUnwantedAppAction": "enable",
+  "defenderNetworkProtectionType": "enable",
+  "defenderScanType": "quick",
+  "defenderScheduledScanDay": "everyday",
+  "defenderScheduledScanTime": 120,
+  "defenderScanDirection": "monitorAllFiles",
+  "defenderAllowCloudProtection": true,
+  "defenderCloudBlockLevel": "high",
+  "defenderSubmitSamplesConsentType": "sendSafeSamplesAutomatically",
+  "defenderAllowEndUserAccess": true,
+  "windowsDefenderTamperProtection": "enable",
+
+  "firewallProfileDomain": {
+    "@odata.type": "microsoft.graph.windowsFirewallNetworkProfile",
+    "firewallEnabled": "allowed",
+    "inboundConnectionsBlocked": true,
+    "stealthModeBlocked": true,
+    "unicastResponsesToMulticastBroadcastsBlocked": true,
+    "inboundNotificationsBlocked": true
+  },
+  "firewallProfilePrivate": {
+    "@odata.type": "microsoft.graph.windowsFirewallNetworkProfile",
+    "firewallEnabled": "allowed",
+    "inboundConnectionsBlocked": true,
+    "stealthModeBlocked": true,
+    "unicastResponsesToMulticastBroadcastsBlocked": true,
+    "inboundNotificationsBlocked": true
+  },
+  "firewallProfilePublic": {
+    "@odata.type": "microsoft.graph.windowsFirewallNetworkProfile",
+    "firewallEnabled": "allowed",
+    "inboundConnectionsBlocked": true,
+    "stealthModeBlocked": true,
+    "unicastResponsesToMulticastBroadcastsBlocked": true,
+    "inboundNotificationsBlocked": true
+  },
+
+  "localSecurityOptionsDisableGuestAccount": true,
+  "localSecurityOptionsBlockRemoteLogonWithBlankPassword": true,
+  "localSecurityOptionsDisableAdministratorAccount": true,
+  "localSecurityOptionsDoNotAllowAnonymousEnumerationOfSAMAccounts": true,
+  "localSecurityOptionsBlockMicrosoftAccounts": true,
+
+  "smartScreenEnableInShell": true,
+  "smartScreenBlockOverrideForFiles": true
 }

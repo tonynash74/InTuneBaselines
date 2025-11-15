@@ -1,37 +1,35 @@
 {
   "@odata.type": "#microsoft.graph.windows10CompliancePolicy",
-  "displayName": "Win11-CORP-L2-Compliance-Baseline-2025-04",
-  "description": "Cyber Essentials L1 baseline \u2013 Windows 11 corporate devices.",
-  "roleScopeTagIds": [
-    "0"
-  ],
+  "displayName": "CE-L2 Windows 11 CORP – Compliance",
+  "description": "Cyber Essentials L2 hardened baseline for corporate Windows 11 devices. Builds on CE-L1 by increasing password strength, shortening idle lock and enforcing a minimum Windows 11 build via Device Health Attestation settings.",
+  "version": 1,
+  "passwordRequired": true,
+  "passwordBlockSimple": true,
+  "passwordRequiredToUnlockFromIdle": true,
+  "passwordMinutesOfInactivityBeforeLock": 5,
+  "passwordExpirationDays": 365,
+  "passwordMinimumLength": 14,
+  "passwordMinimumCharacterSetCount": 3,
+  "passwordRequiredType": "alphanumeric",
+  "passwordPreviousPasswordBlockCount": 5,
+  "requireHealthyDeviceReport": true,
+  "osMinimumVersion": "10.0.22000.0",
+  "earlyLaunchAntiMalwareDriverEnabled": true,
+  "bitLockerEnabled": true,
+  "secureBootEnabled": true,
+  "codeIntegrityEnabled": true,
+  "storageRequireEncryption": true,
   "scheduledActionsForRule": [
     {
-      "ruleName": "SimpleDeviceCompliance",
+      "ruleName": "PasswordRequired",
       "scheduledActionConfigurations": [
         {
           "actionType": "block",
           "gracePeriodHours": 0,
-          "notificationTemplateId": "00000000-0000-0000-0000-000000000000",
+          "notificationTemplateId": "",
           "notificationMessageCCList": []
         }
       ]
     }
-  ],
-  "osMinimumVersion": "10.0.22000.0",
-  "osMaximumVersion": null,
-  "defenderEnabled": true,
-  "defenderVersion": null,
-  "deviceThreatProtectionEnabled": true,
-  "deviceThreatProtectionRequiredSecurityLevel": "secured",
-  "secureBootEnabled": true,
-  "codeIntegrityEnabled": true,
-  "bitLockerEnabled": true,
-  "passwordRequired": true,
-  "passwordBlockSimple": true,
-  "passwordRequiredToUnlockFromIdle": true,
-  "passwordMinimumLength": 12,
-  "passwordRequiredType": "alphanumeric",
-  "passwordExpirationDays": 180,
-  "passwordMinutesOfInactivityBeforeLock": 5
+  ]
 }
