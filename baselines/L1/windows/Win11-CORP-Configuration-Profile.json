@@ -1,8 +1,60 @@
 {
-  "@odata.type": "#microsoft.graph.deviceManagementConfigurationPolicy",
+  "@odata.type": "#microsoft.graph.windows10EndpointProtectionConfiguration",
   "displayName": "Win11-CORP-L1-Configuration-Baseline-2025-04",
-  "description": "Cyber Essentials L1 baseline \u2013 Windows 11 corporate devices (Settings Catalog skeleton). Replace/enrich settings via Intune export.",
-  "platforms": "windows10",
-  "technologies": "mdm",
-  "settings": []
+  "description": "Cyber Essentials L1 baseline - Windows 11 corporate devices. Configures Microsoft Defender AV, host network protection and core local security options aligned to CE L1 controls.",
+
+  // --- Cyber Essentials: Malware protection ---
+  "defenderAllowRealTimeMonitoring": true,
+  "defenderAllowOnAccessProtection": true,
+  "defenderAllowBehaviorMonitoring": true,
+  "defenderAllowScanDownloads": true,
+  "defenderAllowScanNetworkFiles": true,
+  "defenderAllowScanRemovableDrivesDuringFullScan": true,
+  "defenderEnableScanIncomingMail": true,
+  "defenderEnableScanMappedNetworkDrivesDuringFullScan": true,
+  "defenderCheckForSignaturesBeforeRunningScan": true,
+  "defenderSignatureUpdateIntervalInHours": 4,
+  "defenderPotentiallyUnwantedAppAction": "enable",
+  "defenderNetworkProtectionType": "enable",
+
+  // Daily quick scan at 02:00 – CE requires regular anti-malware scans
+  "defenderScanType": "quick",
+  "defenderScheduledScanDay": "everyday",
+  "defenderScheduledScanTime": 120,
+  "defenderScanDirection": "monitorAllFiles",
+
+  // Cloud protection & sample submission
+  "defenderAllowCloudProtection": true,
+  "defenderCloudBlockLevel": "high",
+  "defenderSubmitSamplesConsentType": "sendSafeSamplesAutomatically",
+
+  // Defender UI & tamper protection
+  "defenderAllowEndUserAccess": true,
+  "windowsDefenderTamperProtection": "enable",
+
+  // --- Cyber Essentials: Firewalls ---
+  // Require host firewall enabled and blocking inbound on all profiles
+  "firewallProfileDomain": {
+    "@odata.type": "microsoft.graph.windowsFirewallNetworkProfile",
+    "firewallEnabled": "allowed",
+    "inboundConnectionsBlocked": true
+  },
+  "firewallProfilePrivate": {
+    "@odata.type": "microsoft.graph.windowsFirewallNetworkProfile",
+    "firewallEnabled": "allowed",
+    "inboundConnectionsBlocked": true
+  },
+  "firewallProfilePublic": {
+    "@odata.type": "microsoft.graph.windowsFirewallNetworkProfile",
+    "firewallEnabled": "allowed",
+    "inboundConnectionsBlocked": true
+  },
+
+  // --- Cyber Essentials: Secure configuration (accounts / auth) ---
+  "localSecurityOptionsDisableGuestAccount": true,
+  "localSecurityOptionsBlockRemoteLogonWithBlankPassword": true,
+
+  // --- Cyber Essentials: Secure configuration (SmartScreen) ---
+  "smartScreenEnableInShell": true,
+  "smartScreenBlockOverrideForFiles": true
 }
