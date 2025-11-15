@@ -1,0 +1,20 @@
+{
+  "@odata.type": "#microsoft.graph.iosGeneralDeviceConfiguration",
+  "displayName": "CE-L2 iOS CORP – Device configuration",
+  "description": "Cyber Essentials L2 hardened configuration for corporate-owned/supervised iOS/iPadOS devices. Focuses on restricting high-risk exfiltration paths (AirDrop, host pairing, iCloud) and enforcing encrypted backups.",
+  "airDropBlocked": true,
+  "hostPairingBlocked": true,
+  "configurationProfileBlockChanges": true,
+  "iCloudBlockBackup": true,
+  "iCloudRequireEncryptedBackup": true,
+  "iCloudBlockDocumentSync": true,
+  "iCloudBlockManagedAppsSync": true,
+  "iCloudBlockPhotoLibrary": true,
+  "iCloudBlockPhotoStreamSync": true,
+  "iCloudBlockSharedPhotoStream": true,
+  "documentsBlockManagedDocumentsInUnmanagedApps": true,
+  "documentsBlockUnmanagedDocumentsInManagedApps": true,
+  "certificatesBlockUntrustedTlsCertificates": true,
+  "appStoreBlockAutomaticDownloads": true,
+  "iTunesBlockExplicitContent": true
+}

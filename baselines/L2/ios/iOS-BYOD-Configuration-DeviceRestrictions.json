@@ -1,0 +1,9 @@
+{
+  "@odata.type": "#microsoft.graph.iosGeneralDeviceConfiguration",
+  "displayName": "CE-L2 iOS BYOD – Device configuration",
+  "description": "Cyber Essentials L2-aligned device configuration for BYOD iOS/iPadOS. Focuses on data boundary controls between managed and unmanaged apps plus TLS hardening without breaking personal use.",
+  "iCloudBlockManagedAppsSync": true,
+  "documentsBlockManagedDocumentsInUnmanagedApps": true,
+  "documentsBlockUnmanagedDocumentsInManagedApps": true,
+  "certificatesBlockUntrustedTlsCertificates": true
+}
