@@ -5,12 +5,22 @@ param(
 
     [string]$BaselineRoot = "./baselines",
 
-    [string]$VersionTag = "2025-04"
+    [string]$VersionTag = "2025-04",
+
+    # NEW: filter which policies to import
+    [ValidateSet("Android", "iOS", "Windows 11", "macOS")]
+    [string[]]$Platforms = @("Android", "iOS", "Windows 11", "macOS"),
+
+    [ValidateSet("BYOD", "CORP")]
+    [string[]]$Scopes = @("BYOD", "CORP"),
+
+    [ValidateSet("Compliance", "Config")]
+    [string[]]$Types = @("Compliance", "Config")
 )
 
 Write-Host "Importing Cyber Essentials $Level baselines (version $VersionTag)..." -ForegroundColor Cyan
 
-# Ensure helper scripts are available
+# Ensure helper script is available
 . "$PSScriptRoot\Invoke-CeGraphImportPolicy.ps1"
 if (Test-Path "$PSScriptRoot\New-CeIosCustomConfiguration.ps1") {
     . "$PSScriptRoot\New-CeIosCustomConfiguration.ps1"
@@ -27,71 +37,131 @@ function New-CeDisplayName {
         [Parameter(Mandatory)][string]$VersionTag,
         [Parameter(Mandatory)][string]$Level
     )
-    # CE-L1 iOS BYOD – Compliance (2025-04)
+    # CE-L1 Android BYOD – Compliance (2025-04)
     return "CE-$Level $Platform $Scope – $Type ($VersionTag)"
 }
 
-# --- Android ---
-Write-Host "Importing Android baselines..." -ForegroundColor Yellow
+function Import-CePolicy {
+    [CmdletBinding()]
+    param(
+        [Parameter(Mandatory)]
+        [ValidateSet("Compliance", "Config")]
+        [string]$Type,
 
-# BYOD
-$path = Join-Path $basePath "android/Android-BYOD-Compliance-Policy.json"
-Invoke-CeGraphImportPolicy -Type Compliance -Path $path `
-    -DisplayNameOverride (New-CeDisplayName -Platform "Android" -Scope "BYOD" -Type "Compliance" -VersionTag $VersionTag -Level $Level)
+        [Parameter(Mandatory)]
+        [string]$Path,
 
-$path = Join-Path $basePath "android/Android-BYOD-Configuration-Profile.json"
-Invoke-CeGraphImportPolicy -Type Configuration -Path $path `
-    -DisplayNameOverride (New-CeDisplayName -Platform "Android" -Scope "BYOD" -Type "Config" -VersionTag $VersionTag -Level $Level)
+        [Parameter(Mandatory)]
+        [string]$Platform,
 
-# CORP
-$path = Join-Path $basePath "android/Android-CORP-Compliance-Policy.json"
-Invoke-CeGraphImportPolicy -Type Compliance -Path $path `
-    -DisplayNameOverride (New-CeDisplayName -Platform "Android" -Scope "CORP" -Type "Compliance" -VersionTag $VersionTag -Level $Level)
+        [Parameter(Mandatory)]
+        [string]$Scope,
 
-$path = Join-Path $basePath "android/Android-CORP-Configuration-Profile.json"
-Invoke-CeGraphImportPolicy -Type Configuration -Path $path `
-    -DisplayNameOverride (New-CeDisplayName -Platform "Android" -Scope "CORP" -Type "Config" -VersionTag $VersionTag -Level $Level)
+        [Parameter(Mandatory)]
+        [string]$Level,
 
-# --- iOS ---
-Write-Host "Importing iOS/iPadOS baselines..." -ForegroundColor Yellow
+        [Parameter(Mandatory)]
+        [string]$VersionTag
+    )
 
-# Compliance (BYOD / CORP) – already JSON in baselines
-$path = Join-Path $basePath "ios/iOS-BYOD-Compliance-Policy.json"
-Invoke-CeGraphImportPolicy -Type Compliance -Path $path `
-    -DisplayNameOverride (New-CeDisplayName -Platform "iOS" -Scope "BYOD" -Type "Compliance" -VersionTag $VersionTag -Level $Level)
+    if (-not (Test-Path $Path)) {
+        Write-Warning "Baseline file not found, skipping: $Path"
+        return
+    }
 
-$path = Join-Path $basePath "ios/iOS-CORP-Compliance-Policy.json"
-Invoke-CeGraphImportPolicy -Type Compliance -Path $path `
-    -DisplayNameOverride (New-CeDisplayName -Platform "iOS" -Scope "CORP" -Type "Compliance" -VersionTag $VersionTag -Level $Level)
+    $graphType = if ($Type -eq "Compliance") { "Compliance" } else { "Configuration" }
 
-# Configuration (now Graph-native iosGeneralDeviceConfiguration)
-$path = Join-Path $basePath "ios/iOS-BYOD-Configuration-Profile.json"
-if (Test-Path $path) {
-    Invoke-CeGraphImportPolicy -Type Configuration -Path $path `
-        -DisplayNameOverride (New-CeDisplayName -Platform "iOS" -Scope "BYOD" -Type "Config" -VersionTag $VersionTag -Level $Level)
-}
-else {
-    Write-Warning "Expected iOS BYOD configuration JSON not found at $path"
+    $displayName = New-CeDisplayName -Platform $Platform -Scope $Scope -Type $Type -VersionTag $VersionTag -Level $Level
+
+    Write-Host "Importing $Type baseline for $Platform $Scope from $Path" -ForegroundColor Yellow
+
+    Invoke-CeGraphImportPolicy -Type $graphType -Path $Path -DisplayNameOverride $displayName
 }
 
-$path = Join-Path $basePath "ios/iOS-CORP-Configuration-Profile.json"
-if (Test-Path $path) {
-    Invoke-CeGraphImportPolicy -Type Configuration -Path $path `
-        -DisplayNameOverride (New-CeDisplayName -Platform "iOS" -Scope "CORP" -Type "Config" -VersionTag $VersionTag -Level $Level)
+#
+# ANDROID
+#
+if ("Android" -in $Platforms) {
+    Write-Host "Processing Android baselines..." -ForegroundColor Cyan
+
+    if ("BYOD" -in $Scopes) {
+        if ("Compliance" -in $Types) {
+            $path = Join-Path $basePath "android/Android-BYOD-Compliance-Policy.json"
+            Import-CePolicy -Type "Compliance" -Path $path -Platform "Android" -Scope "BYOD" -Level $Level -VersionTag $VersionTag
+        }
+        if ("Config" -in $Types) {
+            $path = Join-Path $basePath "android/Android-BYOD-Configuration-Profile.json"
+            Import-CePolicy -Type "Config" -Path $path -Platform "Android" -Scope "BYOD" -Level $Level -VersionTag $VersionTag
+        }
+    }
+
+    if ("CORP" -in $Scopes) {
+        if ("Compliance" -in $Types) {
+            $path = Join-Path $basePath "android/Android-CORP-Compliance-Policy.json"
+            Import-CePolicy -Type "Compliance" -Path $path -Platform "Android" -Scope "CORP" -Level $Level -VersionTag $VersionTag
+        }
+        if ("Config" -in $Types) {
+            $path = Join-Path $basePath "android/Android-CORP-Configuration-Profile.json"
+            Import-CePolicy -Type "Config" -Path $path -Platform "Android" -Scope "CORP" -Level $Level -VersionTag $VersionTag
+        }
+    }
 }
-else {
-    Write-Warning "Expected iOS CORP configuration JSON not found at $path"
+
+#
+# iOS / iPadOS
+#
+if ("iOS" -in $Platforms) {
+    Write-Host "Processing iOS/iPadOS baselines..." -ForegroundColor Cyan
+
+    if ("BYOD" -in $Scopes) {
+        if ("Compliance" -in $Types) {
+            $path = Join-Path $basePath "ios/iOS-BYOD-Compliance-Policy.json"
+            Import-CePolicy -Type "Compliance" -Path $path -Platform "iOS" -Scope "BYOD" -Level $Level -VersionTag $VersionTag
+        }
+        if ("Config" -in $Types) {
+            $path = Join-Path $basePath "ios/iOS-BYOD-Configuration-Profile.json"
+            Import-CePolicy -Type "Config" -Path $path -Platform "iOS" -Scope "BYOD" -Level $Level -VersionTag $VersionTag
+        }
+    }
+
+    if ("CORP" -in $Scopes) {
+        if ("Compliance" -in $Types) {
+            $path = Join-Path $basePath "ios/iOS-CORP-Compliance-Policy.json"
+            Import-CePolicy -Type "Compliance" -Path $path -Platform "iOS" -Scope "CORP" -Level $Level -VersionTag $VersionTag
+        }
+        if ("Config" -in $Types) {
+            $path = Join-Path $basePath "ios/iOS-CORP-Configuration-Profile.json"
+            Import-CePolicy -Type "Config" -Path $path -Platform "iOS" -Scope "CORP" -Level $Level -VersionTag $VersionTag
+        }
+    }
 }
 
-# --- Windows 11 ---
-Write-Host "Importing Windows 11 baselines..." -ForegroundColor Yellow
+#
+# WINDOWS 11 (CORP only)
+#
+if ("Windows 11" -in $Platforms -and "CORP" -in $Scopes) {
+    Write-Host "Processing Windows 11 baselines..." -ForegroundColor Cyan
 
-$path = Join-Path $basePath "windows/Win11-CORP-Compliance-Policy.json"
-Invoke-CeGraphImportPolicy -Type Compliance -Path $path `
-    -DisplayNameOverride (New-CeDisplayName -Platform "Windows 11" -Scope "CORP" -Type "Compliance" -VersionTag $VersionTag -Level $Level)
+    if ("Compliance" -in $Types) {
+        $path = Join-Path $basePath "windows/Win11-CORP-Compliance-Policy.json"
+        Import-CePolicy -Type "Compliance" -Path $path -Platform "Windows 11" -Scope "CORP" -Level $Level -VersionTag $VersionTag
+    }
+    if ("Config" -in $Types) {
+        $path = Join-Path $basePath "windows/Win11-CORP-Configuration-Profile.json"
+        Import-CePolicy -Type "Config" -Path $path -Platform "Windows 11" -Scope "CORP" -Level $Level -VersionTag $VersionTag
+    }
+}
 
-$path = Join-Path $basePath "windows/Win11-CORP-Configuration-Profile.json"
-Invoke-CeGraphImportPolicy -Type Configuration -Path $path `
-    -DisplayNameOverride (New-CeDisplayName -Platform "Windows 11" -Scope "CORP" -Type "Config" -VersionTag $VersionTag -Level $Level)
+#
+# macOS (CORP only) – compliance baselines
+#
+if ("macOS" -in $Platforms -and "CORP" -in $Scopes) {
+    Write-Host "Processing macOS baselines..." -ForegroundColor Cyan
+
+    if ("Compliance" -in $Types) {
+        $path = Join-Path $basePath "macos/macOS-CORP-Compliance-Policy.json"
+        Import-CePolicy -Type "Compliance" -Path $path -Platform "macOS" -Scope "CORP" -Level $Level -VersionTag $VersionTag
+    }
+}
 
 Write-Host "Done importing $Level baselines." -ForegroundColor Green
