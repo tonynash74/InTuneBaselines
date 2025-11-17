@@ -1,6 +1,7 @@
-$moduleRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
-$repoRoot   = Split-Path -Parent $moduleRoot
-$scriptsRoot = Join-Path $repoRoot "scripts"
+$moduleFolder = $PSScriptRoot
+$modulesRoot  = Split-Path -Parent $moduleFolder
+$repoRoot     = Split-Path -Parent $modulesRoot
+$scriptsRoot  = Join-Path $repoRoot "scripts"
 
 function Import-CeBaseline {
     [CmdletBinding()]
@@ -22,6 +23,31 @@ function Import-CeBaseline {
         [ValidateSet("Compliance", "Config")]
         [string[]]$Types
     )
+
+    $scriptPath = Join-Path $scriptsRoot "Import-IntuneBaselines.ps1"
+
+    if (-not (Test-Path $scriptPath)) {
+        throw "Import-IntuneBaselines.ps1 not found at $scriptPath"
+    }
+
+    $params = @{
+        Level        = $Level
+        BaselineRoot = $BaselineRoot
+        VersionTag   = $VersionTag
+    }
+
+    if ($PSBoundParameters.ContainsKey('Platforms')) {
+        $params.Platforms = $Platforms
+    }
+    if ($PSBoundParameters.ContainsKey('Scopes')) {
+        $params.Scopes = $Scopes
+    }
+    if ($PSBoundParameters.ContainsKey('Types')) {
+        $params.Types = $Types
+    }
+
+    & $scriptPath @params
+}
 
     $scriptPath = Join-Path $scriptsRoot "Import-IntuneBaselines.ps1"
 
