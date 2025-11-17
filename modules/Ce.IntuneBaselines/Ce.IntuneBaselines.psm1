@@ -11,16 +11,43 @@ function Import-CeBaseline {
 
         [string]$BaselineRoot = (Join-Path $repoRoot "baselines"),
 
-        [string]$VersionTag = "2025-04"
+        [string]$VersionTag = "2025-04",
+
+        [ValidateSet("Android", "iOS", "Windows 11", "macOS")]
+        [string[]]$Platforms,
+
+        [ValidateSet("BYOD", "CORP")]
+        [string[]]$Scopes,
+
+        [ValidateSet("Compliance", "Config")]
+        [string[]]$Types
     )
+
     $scriptPath = Join-Path $scriptsRoot "Import-IntuneBaselines.ps1"
 
     if (-not (Test-Path $scriptPath)) {
         throw "Import-IntuneBaselines.ps1 not found at $scriptPath"
     }
 
-    & $scriptPath -Level $Level -BaselineRoot $BaselineRoot -VersionTag $VersionTag
+    $params = @{
+        Level        = $Level
+        BaselineRoot = $BaselineRoot
+        VersionTag   = $VersionTag
+    }
+
+    if ($PSBoundParameters.ContainsKey('Platforms')) {
+        $params.Platforms = $Platforms
+    }
+    if ($PSBoundParameters.ContainsKey('Scopes')) {
+        $params.Scopes = $Scopes
+    }
+    if ($PSBoundParameters.ContainsKey('Types')) {
+        $params.Types = $Types
+    }
+
+    & $scriptPath @params
 }
+
 
 function Invoke-CeBaselineDeployment {
     [CmdletBinding(SupportsShouldProcess)]
