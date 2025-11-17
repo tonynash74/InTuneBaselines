@@ -61,3 +61,20 @@ Get-CeTenantReadiness | Format-Table
 
 # Multi-tenant rollout
 Invoke-CeBaselineDeployment -TenantConfigPath .\tenants\tenants.json -WhatIf
+
+Import-Module .\modules\Ce.IntuneBaselines\Ce.IntuneBaselines.psd1
+
+# Everything (as before)
+Import-CeBaseline -Level L1 -VersionTag "2025-04"
+
+# Only iOS BYOD baselines (L2)
+Import-CeBaseline -Level L2 `
+  -Platforms iOS `
+  -Scopes BYOD `
+  -Types Compliance,Config
+
+# Only macOS + Windows 11 (L1), compliance only
+Import-CeBaseline -Level L1 `
+  -Platforms "Windows 11","macOS" `
+  -Scopes CORP `
+  -Types Compliance
