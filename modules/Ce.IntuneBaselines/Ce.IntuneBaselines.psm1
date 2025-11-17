@@ -1,30 +1,32 @@
+# Determine repo root and scripts folder based on module location
+# PSScriptRoot = ...\InTuneBaselines\modules\Ce.IntuneBaselines
 $moduleFolder = $PSScriptRoot
-$modulesRoot  = Split-Path -Parent $moduleFolder
-$repoRoot     = Split-Path -Parent $modulesRoot
-$scriptsRoot  = Join-Path $repoRoot "scripts"
+$modulesRoot  = Split-Path -Parent $moduleFolder         # ...\InTuneBaselines\modules
+$repoRoot     = Split-Path -Parent $modulesRoot          # ...\InTuneBaselines
+$scriptsRoot  = Join-Path $repoRoot 'scripts'
 
 function Import-CeBaseline {
     [CmdletBinding()]
     param(
         [Parameter(Mandatory)]
-        [ValidateSet("L1", "L2")]
+        [ValidateSet('L1','L2')]
         [string]$Level,
 
-        [string]$BaselineRoot = (Join-Path $repoRoot "baselines"),
+        [string]$BaselineRoot = (Join-Path $repoRoot 'baselines'),
 
-        [string]$VersionTag = "2025-04",
+        [string]$VersionTag = '2025-04',
 
-        [ValidateSet("Android", "iOS", "Windows 11", "macOS")]
+        [ValidateSet('Android','iOS','Windows 11','macOS')]
         [string[]]$Platforms,
 
-        [ValidateSet("BYOD", "CORP")]
+        [ValidateSet('BYOD','CORP')]
         [string[]]$Scopes,
 
-        [ValidateSet("Compliance", "Config")]
+        [ValidateSet('Compliance','Config')]
         [string[]]$Types
     )
 
-    $scriptPath = Join-Path $scriptsRoot "Import-IntuneBaselines.ps1"
+    $scriptPath = Join-Path $scriptsRoot 'Import-IntuneBaselines.ps1'
 
     if (-not (Test-Path $scriptPath)) {
         throw "Import-IntuneBaselines.ps1 not found at $scriptPath"
@@ -36,73 +38,39 @@ function Import-CeBaseline {
         VersionTag   = $VersionTag
     }
 
-    if ($PSBoundParameters.ContainsKey('Platforms')) {
-        $params.Platforms = $Platforms
-    }
-    if ($PSBoundParameters.ContainsKey('Scopes')) {
-        $params.Scopes = $Scopes
-    }
-    if ($PSBoundParameters.ContainsKey('Types')) {
-        $params.Types = $Types
-    }
+    if ($PSBoundParameters.ContainsKey('Platforms')) { $params.Platforms = $Platforms }
+    if ($PSBoundParameters.ContainsKey('Scopes'))    { $params.Scopes    = $Scopes }
+    if ($PSBoundParameters.ContainsKey('Types'))     { $params.Types     = $Types }
 
     & $scriptPath @params
 }
-
-    $scriptPath = Join-Path $scriptsRoot "Import-IntuneBaselines.ps1"
-
-    if (-not (Test-Path $scriptPath)) {
-        throw "Import-IntuneBaselines.ps1 not found at $scriptPath"
-    }
-
-    $params = @{
-        Level        = $Level
-        BaselineRoot = $BaselineRoot
-        VersionTag   = $VersionTag
-    }
-
-    if ($PSBoundParameters.ContainsKey('Platforms')) {
-        $params.Platforms = $Platforms
-    }
-    if ($PSBoundParameters.ContainsKey('Scopes')) {
-        $params.Scopes = $Scopes
-    }
-    if ($PSBoundParameters.ContainsKey('Types')) {
-        $params.Types = $Types
-    }
-
-    & $scriptPath @params
-}
-
 
 function Invoke-CeBaselineDeployment {
     [CmdletBinding(SupportsShouldProcess)]
     param(
-        [string]$TenantConfigPath = (Join-Path $repoRoot "tenants/tenants.json"),
+        [string]$TenantConfigPath = (Join-Path $repoRoot 'tenants/tenants.json'),
 
-        [ValidateSet("L1", "L2", "Both")]
-        [string]$DefaultBaselineLevel = "Both",
+        [ValidateSet('L1','L2','Both')]
+        [string]$DefaultBaselineLevel = 'Both',
 
-        [string]$DefaultVersionTag = "2025-04",
+        [string]$DefaultVersionTag = '2025-04',
 
         [switch]$WhatIf
     )
 
-    $scriptPath = Join-Path $scriptsRoot "Invoke-CeBaselineDeployment.ps1"
+    $scriptPath = Join-Path $scriptsRoot 'Invoke-CeBaselineDeployment.ps1'
 
     if (-not (Test-Path $scriptPath)) {
         throw "Invoke-CeBaselineDeployment.ps1 not found at $scriptPath"
     }
 
     $params = @{
-        TenantConfigPath      = $TenantConfigPath
-        DefaultBaselineLevel  = $DefaultBaselineLevel
-        DefaultVersionTag     = $DefaultVersionTag
+        TenantConfigPath     = $TenantConfigPath
+        DefaultBaselineLevel = $DefaultBaselineLevel
+        DefaultVersionTag    = $DefaultVersionTag
     }
 
-    if ($WhatIf) {
-        $params.WhatIf = $true
-    }
+    if ($WhatIf) { $params.WhatIf = $true }
 
     & $scriptPath @params
 }
@@ -110,8 +78,8 @@ function Invoke-CeBaselineDeployment {
 function Get-CeSettingsCatalog {
     [CmdletBinding()]
     param(
-        [ValidateSet("all", "android", "iOS", "macOS", "windows10", "windows10X")]
-        [string]$Platform = "all",
+        [ValidateSet('all','android','iOS','macOS','windows10','windows10X')]
+        [string]$Platform = 'all',
 
         [string]$Search,
 
@@ -122,7 +90,7 @@ function Get-CeSettingsCatalog {
         [string]$ExportMarkdownPath
     )
 
-    $scriptPath = Join-Path $scriptsRoot "Get-CeIntuneSettingsCatalog.ps1"
+    $scriptPath = Join-Path $scriptsRoot 'Get-CeIntuneSettingsCatalog.ps1'
 
     if (-not (Test-Path $scriptPath)) {
         throw "Get-CeIntuneSettingsCatalog.ps1 not found at $scriptPath"
@@ -130,12 +98,12 @@ function Get-CeSettingsCatalog {
 
     $params = @{
         Platform = $Platform
-        Search   = $Search
     }
 
-    if ($IncludeSettings)   { $params.IncludeSettings   = $true }
-    if ($ExportJsonPath)    { $params.ExportJsonPath    = $ExportJsonPath }
-    if ($ExportMarkdownPath){ $params.ExportMarkdownPath= $ExportMarkdownPath }
+    if ($PSBoundParameters.ContainsKey('Search'))           { $params.Search           = $Search }
+    if ($IncludeSettings)                                   { $params.IncludeSettings  = $true }
+    if ($PSBoundParameters.ContainsKey('ExportJsonPath'))   { $params.ExportJsonPath   = $ExportJsonPath }
+    if ($PSBoundParameters.ContainsKey('ExportMarkdownPath')) { $params.ExportMarkdownPath = $ExportMarkdownPath }
 
     & $scriptPath @params
 }
@@ -143,10 +111,10 @@ function Get-CeSettingsCatalog {
 function Compare-CeBaselines {
     [CmdletBinding()]
     param(
-        [string]$BaselinesRoot = (Join-Path $repoRoot "baselines"),
+        [string]$BaselinesRoot = (Join-Path $repoRoot 'baselines'),
 
-        [ValidateSet("All", "L1", "L2")]
-        [string]$Level = "All",
+        [ValidateSet('All','L1','L2')]
+        [string]$Level = 'All',
 
         [switch]$IncludeCompliance,
 
@@ -155,7 +123,7 @@ function Compare-CeBaselines {
         [string]$ReportPath
     )
 
-    $scriptPath = Join-Path $scriptsRoot "Compare-CeBaselines.ps1"
+    $scriptPath = Join-Path $scriptsRoot 'Compare-CeBaselines.ps1'
 
     if (-not (Test-Path $scriptPath)) {
         throw "Compare-CeBaselines.ps1 not found at $scriptPath"
@@ -168,7 +136,7 @@ function Compare-CeBaselines {
 
     if ($IncludeCompliance)      { $params.IncludeCompliance      = $true }
     if ($IncludeConfigurations)  { $params.IncludeConfigurations  = $true }
-    if ($ReportPath)             { $params.ReportPath             = $ReportPath }
+    if ($PSBoundParameters.ContainsKey('ReportPath')) { $params.ReportPath = $ReportPath }
 
     & $scriptPath @params
 }
@@ -176,12 +144,12 @@ function Compare-CeBaselines {
 function Get-CeTenantReadiness {
     [CmdletBinding()]
     param(
-        [string]$VersionTag = "2025-04",
+        [string]$VersionTag = '2025-04',
 
         [switch]$AsJson
     )
 
-    $scriptPath = Join-Path $scriptsRoot "Get-CeTenantReadiness.ps1"
+    $scriptPath = Join-Path $scriptsRoot 'Get-CeTenantReadiness.ps1'
 
     if (-not (Test-Path $scriptPath)) {
         throw "Get-CeTenantReadiness.ps1 not found at $scriptPath"
@@ -191,16 +159,9 @@ function Get-CeTenantReadiness {
         VersionTag = $VersionTag
     }
 
-    if ($AsJson) {
-        $params.AsJson = $true
-    }
+    if ($AsJson) { $params.AsJson = $true }
 
     & $scriptPath @params
 }
 
-Export-ModuleMember -Function `
-    Import-CeBaseline, `
-    Invoke-CeBaselineDeployment, `
-    Get-CeSettingsCatalog, `
-    Compare-CeBaselines, `
-    Get-CeTenantReadiness
+Export-ModuleMember -Function Import-CeBaseline, Invoke-CeBaselineDeployment, Get-CeSettingsCatalog, Compare-CeBaselines, Get-CeTenantReadiness
