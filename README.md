@@ -49,6 +49,10 @@ For a more ergonomic experience, use the module wrapper:
 ```powershell
 Import-Module .\modules\Ce.IntuneBaselines\Ce.IntuneBaselines.psd1
 
+# Connect Graph 
+Connect-MgGraph -Scopes "DeviceManagementConfiguration.ReadWrite.All"
+
+
 # Import baselines for the current tenant
 Import-CeBaseline -Level L1 -VersionTag "2025-04"
 Import-CeBaseline -Level L2 -VersionTag "2025-04"
