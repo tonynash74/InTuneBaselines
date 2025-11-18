@@ -1,0 +1,53 @@
+{
+  "@odata.type": "#microsoft.graph.conditionalAccessPolicy",
+  "displayName": "CE-L1 CA-01 – Block legacy authentication",
+  "description": "Cyber Essentials L1 baseline. Blocks legacy authentication (Exchange ActiveSync and other legacy clients) for all users and all cloud apps, except designated break-glass accounts.",
+  "state": "enabledForReportingButNotEnforced",
+  "conditions": {
+    "applications": {
+      "includeApplications": [
+        "All"
+      ],
+      "excludeApplications": [],
+      "includeUserActions": [],
+      "applicationFilter": null
+    },
+    "users": {
+      "includeUsers": [
+        "All"
+      ],
+      "excludeUsers": [
+        "OBJECTID-BREAKGLASS-1",
+        "OBJECTID-BREAKGLASS-2"
+      ],
+      "includeGroups": [],
+      "excludeGroups": [],
+      "includeRoles": [],
+      "excludeRoles": [],
+      "includeGuestsOrExternalUsers": null,
+      "excludeGuestsOrExternalUsers": null
+    },
+    "clientAppTypes": [
+      "exchangeActiveSync",
+      "other"
+    ],
+    "signInRiskLevels": [],
+    "userRiskLevels": [],
+    "servicePrincipalRiskLevels": [],
+    "insiderRiskLevels": [],
+    "authenticationFlows": null,
+    "clientApplications": null,
+    "devices": null,
+    "locations": null,
+    "platforms": null
+  },
+  "grantControls": {
+    "operator": "OR",
+    "builtInControls": [
+      "block"
+    ],
+    "customAuthenticationFactors": [],
+    "termsOfUse": [],
+    "authenticationStrength": null
+  }
+}
