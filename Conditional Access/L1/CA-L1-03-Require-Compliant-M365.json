@@ -1,0 +1,53 @@
+{
+  "@odata.type": "#microsoft.graph.conditionalAccessPolicy",
+  "displayName": "CE-L1 CA-03 – Require compliant device for M365",
+  "description": "Cyber Essentials L1 baseline. Requires devices to be marked as compliant in Intune to access core Microsoft 365 services (Exchange, SharePoint, Teams, etc.). Complements MFA policy to enforce secure device posture.",
+  "state": "enabledForReportingButNotEnforced",
+  "conditions": {
+    "applications": {
+      "includeApplications": [
+        "Office365"
+      ],
+      "excludeApplications": [],
+      "includeUserActions": [],
+      "applicationFilter": null
+    },
+    "users": {
+      "includeUsers": [
+        "All"
+      ],
+      "excludeUsers": [
+        "OBJECTID-BREAKGLASS-1",
+        "OBJECTID-BREAKGLASS-2"
+      ],
+      "includeGroups": [],
+      "excludeGroups": [],
+      "includeRoles": [],
+      "excludeRoles": [],
+      "includeGuestsOrExternalUsers": null,
+      "excludeGuestsOrExternalUsers": null
+    },
+    "clientAppTypes": [
+      "browser",
+      "mobileAppsAndDesktopClients"
+    ],
+    "signInRiskLevels": [],
+    "userRiskLevels": [],
+    "servicePrincipalRiskLevels": [],
+    "insiderRiskLevels": [],
+    "authenticationFlows": null,
+    "clientApplications": null,
+    "devices": null,
+    "locations": null,
+    "platforms": null
+  },
+  "grantControls": {
+    "operator": "AND",
+    "builtInControls": [
+      "compliantDevice"
+    ],
+    "customAuthenticationFactors": [],
+    "termsOfUse": [],
+    "authenticationStrength": null
+  }
+}
