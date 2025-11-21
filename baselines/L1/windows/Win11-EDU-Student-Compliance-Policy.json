@@ -1,0 +1,42 @@
+{
+  "@odata.type": "#microsoft.graph.windows10CompliancePolicy",
+  "displayName": "CE-L1 EDU Windows 11 Student – Compliance (2025-04)",
+  "description": "Cyber Essentials L1 baseline for Windows 11 student devices in education. Enforces secure sign-in, supported OS, BitLocker, Secure Boot, and core platform health, aligned with CE secure configuration and malware protection controls.",
+  "version": 1,
+
+  // Password / sign-in
+  "passwordRequired": true,
+  "passwordBlockSimple": true,
+  "passwordRequiredToUnlockFromIdle": true,
+  "passwordMinutesOfInactivityBeforeLock": 5,
+  "passwordMinimumLength": 8,
+  "passwordMinimumCharacterSetCount": 2,
+  "passwordRequiredType": "alphanumeric",
+  "passwordPreviousPasswordBlockCount": 5,
+
+  // OS version (Win 11 22H2 / build 22621+)
+  "osMinimumVersion": "10.0.22621.0",
+
+  // Platform health / disk encryption
+  "earlyLaunchAntiMalwareDriverEnabled": true,
+  "bitLockerEnabled": true,
+  "secureBootEnabled": true,
+  "codeIntegrityEnabled": true,
+  "storageRequireEncryption": true,
+  "requireHealthyDeviceReport": true,
+
+  // L1 behaviour: block for any non-compliance
+  "scheduledActionsForRule": [
+    {
+      "ruleName": "PasswordRequired",
+      "scheduledActionConfigurations": [
+        {
+          "actionType": "block",
+          "gracePeriodHours": 0,
+          "notificationTemplateId": "",
+          "notificationMessageCCList": []
+        }
+      ]
+    }
+  ]
+}

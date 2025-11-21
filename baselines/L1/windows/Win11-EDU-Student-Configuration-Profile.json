@@ -1,0 +1,34 @@
+{
+  "@odata.type": "#microsoft.graph.windows10EndpointProtectionConfiguration",
+  "displayName": "CE-L1 EDU Windows 11 Student – Configuration (2025-04)",
+  "description": "Cyber Essentials L1 endpoint protection baseline for Windows 11 student devices in education. Enables BitLocker, Windows Firewall across all profiles, and SmartScreen, aligned to CE secure configuration and malware protection controls.",
+  "version": 1,
+
+  // BitLocker – require device encryption
+  "bitLockerEncryptDevice": true,
+  "bitLockerDisableWarningForOtherDiskEncryption": false,
+  "bitLockerRemovableDrivePolicy": {
+    "@odata.type": "microsoft.graph.bitLockerRemovableDrivePolicy",
+    "requireEncryptionForWriteAccess": true,
+    "blockCrossOrganizationWriteAccess": true,
+    "encryptionMethod": "aesCbc128"
+  },
+
+  // Windows Firewall – enabled on all profiles
+  "firewallProfileDomain": {
+    "@odata.type": "microsoft.graph.windowsFirewallNetworkProfile",
+    "firewallEnabled": "allowed"
+  },
+  "firewallProfilePrivate": {
+    "@odata.type": "microsoft.graph.windowsFirewallNetworkProfile",
+    "firewallEnabled": "allowed"
+  },
+  "firewallProfilePublic": {
+    "@odata.type": "microsoft.graph.windowsFirewallNetworkProfile",
+    "firewallEnabled": "allowed"
+  },
+
+  // SmartScreen – on, and users can’t bypass file warnings
+  "smartScreenEnableInShell": true,
+  "smartScreenBlockOverrideForFiles": true
+}
